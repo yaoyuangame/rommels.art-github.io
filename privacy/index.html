@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Rommels Art Play</title>
+<meta name="description" content="Privacy Policy for Rommels Art Play games and services.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050805; --bg-2:#08100A; --panel:#0A140D;
+    --phos:#3DFF7A; --phos-2:#8CFFB4; --phos-dim:#1F5C33;
+    --amber:#FFB000; --ink:#B9D9C4; --muted:#5E7D68; --line:#16351F;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background:var(--bg);color:var(--ink);
+    font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;
+    font-size:14.5px;font-weight:300;line-height:1.8;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  body:before{content:"";position:fixed;inset:0;z-index:90;pointer-events:none;
+    background:repeating-linear-gradient(to bottom,rgba(0,0,0,0) 0px,rgba(0,0,0,0) 2px,rgba(0,0,0,.26) 3px,rgba(0,0,0,.26) 4px);
+    opacity:.55}
+  body:after{content:"";position:fixed;inset:0;z-index:89;pointer-events:none;
+    background:radial-gradient(ellipse 78% 66% at 50% 50%, transparent 46%, rgba(0,0,0,.6) 100%)}
+  h1,h2{font-family:'VT323',monospace;font-weight:400;letter-spacing:.01em;line-height:1.1}
+  a{color:var(--phos)}
+  .wrap{max-width:860px;margin:0 auto;padding:0 28px;position:relative;z-index:2}
+  .glow{text-shadow:0 0 6px rgba(61,255,122,.5),0 0 20px rgba(61,255,122,.2)}
+
+  header{position:sticky;top:0;z-index:60;background:rgba(5,8,5,.95);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:60px;gap:18px;font-size:.78rem}
+  .brand{display:flex;align-items:center;gap:9px}
+  .led{width:8px;height:8px;border-radius:50%;flex:none;background:var(--phos);box-shadow:0 0 8px var(--phos)}
+  .brand .path{color:var(--phos);font-weight:500}
+  .brand .dim{color:var(--muted)}
+  .nav .back{color:var(--muted);font-size:.76rem}
+  .nav .back:hover{color:var(--phos)}
+
+  .head{padding:56px 0 34px;border-bottom:1px solid var(--line)}
+  .tagline{font-size:.7rem;color:var(--amber);text-transform:uppercase;letter-spacing:.2em;display:block;margin-bottom:16px}
+  h1{font-size:clamp(2.1rem,4.8vw,3.2rem);color:var(--phos);margin-bottom:14px}
+  .meta{font-size:.8rem;color:var(--muted)}
+
+  main{padding:38px 0 72px}
+  .intro{
+    border:1px solid var(--line);border-left:3px solid var(--phos);background:var(--panel);
+    padding:22px 24px;margin-bottom:36px;font-size:.9rem;color:var(--ink);
+  }
+  .blk{margin-bottom:30px}
+  .blk h2{font-size:1.36rem;color:var(--phos);margin-bottom:12px;display:flex;align-items:baseline;gap:12px}
+  .blk h2 .n{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--amber);font-weight:500}
+  .blk .c{border-left:1px solid var(--line);padding-left:26px;margin-left:4px}
+  p{margin-bottom:10px;color:var(--ink);font-weight:300;font-size:.9rem}
+  p:last-child{margin-bottom:0}
+  ul{list-style:none;margin:8px 0 0}
+  li{position:relative;padding-left:22px;margin-bottom:10px;color:var(--ink);font-weight:300;font-size:.9rem}
+  li:before{content:"›";position:absolute;left:2px;top:-1px;color:var(--phos);font-weight:700}
+  li:last-child{margin-bottom:0}
+  strong{color:var(--phos-2);font-weight:500}
+
+  .contactbox{
+    border:1px solid var(--phos-dim);background:var(--panel);padding:34px 30px;margin-top:44px;
+    position:relative;overflow:hidden;text-align:center;
+  }
+  .contactbox:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+    background:radial-gradient(460px 260px at 50% 0%, rgba(61,255,122,.12), transparent 64%)}
+  .contactbox > *{position:relative;z-index:2}
+  .contactbox h2{font-size:1.6rem;color:var(--phos);margin-bottom:12px}
+  .contactbox p{color:var(--ink);margin-bottom:16px}
+  .contactbox .ent{font-size:.92rem;font-weight:500;color:var(--phos-2);margin-bottom:14px}
+  .contactbox .mbox{display:inline-block;border:1px solid var(--line);padding:12px 22px;background:var(--bg-2)}
+  .contactbox a{font-size:.88rem;color:var(--phos);word-break:break-all}
+  .contactbox a:hover{text-shadow:0 0 12px rgba(61,255,122,.6)}
+
+  footer{border-top:1px solid var(--line);padding:28px 0 42px;font-size:.74rem}
+  footer .frow{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;align-items:center}
+  footer .cp{color:var(--muted)}
+  footer nav{display:flex;gap:22px}
+  footer nav a{color:var(--muted)}
+  footer nav a:hover{color:var(--phos)}
+  @media(max-width:600px){.blk .c{padding-left:18px}.contactbox{padding:26px 20px}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/"><span class="led"></span><span class="path">rommels.art</span><span class="dim">:~$</span></a>
+    <a class="back" href="/">cd ..</a>
+  </div>
+</header>
+
+<div class="head">
+  <div class="wrap">
+    <span class="tagline">// legal — file 01</span>
+    <h1 class="glow">Privacy Policy</h1>
+    <div class="meta">effective 2026-11-12</div>
+  </div>
+</div>
+
+<main>
+  <div class="wrap">
+
+    <div class="intro">
+      At Rommels Art Play. ("VL", "we", "our", or "us"), we respect your privacy and are committed
+      to protecting your personal information. This privacy policy explains how we collect, use,
+      store, and share your information when you use our games or services. Please read this policy
+      carefully.
+    </div>
+
+    <div class="blk">
+      <h2><span class="n">[01]</span>Information We Collect</h2>
+      <div class="c">
+        <p>We may collect the following types of information:</p>
+        <ul>
+          <li><strong>Personal Information:</strong> When you use our games or services, we may collect information such as your username, email address, and other identifiable details.</li>
+          <li><strong>Device Information:</strong> We may collect information about your device, including device type, operating system, IP address, and other technical details.</li>
+          <li><strong>Usage Data:</strong> We collect data on your interaction with the game, such as progress, scores, and other in-game activity.</li>
+          <li><strong>Location Information:</strong> With your consent, we may collect location data to provide location-based services.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="blk">
+      <h2><span class="n">[02]</span>How We Use Your Information</h2>
+      <div class="c">
+        <p>The information we collect is used for the following purposes:</p>
+        <ul>
+          <li>To provide and maintain our services, including bug fixing and customer support.</li>
+          <li>To analyze game data to improve user experience.</li>
+          <li>To personalize in-game content and display relevant ads.</li>
+          <li>To prevent fraud and illegal activity.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="blk">
+      <h2><span class="n">[03]</span>Information Sharing</h2>
+      <div class="c">
+        <p>We do not share your personal information with third parties except in the following situations:</p>
+        <ul>
+          <li><strong>Legal Requirements:</strong> We may disclose your information if required by law or regulation.</li>
+          <li><strong>Third-Party Service Providers:</strong> We may share your information with trusted third-party partners (e.g., ad networks, analytics providers) to improve the game experience.</li>
+          <li><strong>Business Transfers:</strong> In the event of a merger, acquisition, or asset sale, your information may be transferred as part of the business assets.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="blk">
+      <h2><span class="n">[04]</span>Data Security</h2>
+      <div class="c"><p>We implement reasonable technical and organizational measures to protect your personal information from unauthorized access, disclosure, or alteration.</p></div>
+    </div>
+
+    <div class="blk">
+      <h2><span class="n">[05]</span>Data Retention</h2>
+      <div class="c"><p>We will retain your personal information for as long as necessary to fulfill the purposes outlined in this policy or as required by law. After that, the information will be deleted or anonymized.</p></div>
+    </div>
+
+    <div class="blk">
+      <h2><span class="n">[06]</span>Children's Privacy</h2>
+      <div class="c"><p>We do not knowingly collect personal information from children under the age of 13. If we discover that we have collected personal information from a child, we will take steps to delete it promptly.</p></div>
+    </div>
+
+    <div class="blk">
+      <h2><span class="n">[07]</span>Your Rights</h2>
+      <div class="c"><p>You have the right to access, correct, or delete your personal information. You also have the right to opt out of personalized advertising and analytics services. To exercise these rights, please contact us at the email address below.</p></div>
+    </div>
+
+    <div class="blk">
+      <h2><span class="n">[08]</span>Changes to This Privacy Policy</h2>
+      <div class="c"><p>We may update this privacy policy from time to time. If we make significant changes, we will notify you in advance.</p></div>
+    </div>
+
+    <div class="contactbox">
+      <h2>Contact Us</h2>
+      <p>If you have any questions or concerns about this privacy policy, please contact us at:</p>
+      <div class="ent">Rommels Art Play.</div>
+      <div class="mbox"><a href="mailto:societesatralomdarl@gmail.com">societesatralomdarl@gmail.com</a></div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="frow">
+      <div class="cp">© 2026 Rommels Art Play. exit 0</div>
+      <nav><a href="/">/home</a><a href="/terms/">/terms</a></nav>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

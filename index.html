@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rommels Art Play — Games, Compiled</title>
+<meta name="description" content="Rommels Art Play builds tightly-scoped casual games for mobile. No bloat, no timers, no wasted cycles.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050805;
+    --bg-2:#08100A;
+    --panel:#0A140D;
+    --phos:#3DFF7A;
+    --phos-2:#8CFFB4;
+    --phos-dim:#1F5C33;
+    --amber:#FFB000;
+    --ink:#B9D9C4;
+    --muted:#5E7D68;
+    --line:#16351F;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:15px;font-weight:300;line-height:1.78;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  /* scanlines + vignette */
+  body:before{
+    content:"";position:fixed;inset:0;z-index:90;pointer-events:none;
+    background:repeating-linear-gradient(
+      to bottom,
+      rgba(0,0,0,0) 0px,
+      rgba(0,0,0,0) 2px,
+      rgba(0,0,0,.26) 3px,
+      rgba(0,0,0,.26) 4px);
+    opacity:.55;
+  }
+  body:after{
+    content:"";position:fixed;inset:0;z-index:89;pointer-events:none;
+    background:radial-gradient(ellipse 78% 66% at 50% 50%, transparent 46%, rgba(0,0,0,.62) 100%);
+  }
+  .disp{font-family:'VT323',monospace;font-weight:400;letter-spacing:.01em;line-height:1}
+  h1,h2,h3{font-family:'VT323',monospace;font-weight:400;letter-spacing:.01em;line-height:1.06}
+  a{color:var(--phos);text-decoration:none}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 28px;position:relative;z-index:2}
+  .glow{text-shadow:0 0 6px rgba(61,255,122,.55), 0 0 22px rgba(61,255,122,.22)}
+  .p{color:var(--phos)}
+  .cmd{color:var(--amber)}
+
+  /* ---------- header ---------- */
+  header{position:sticky;top:0;z-index:60;background:rgba(5,8,5,.94);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px;gap:22px;font-size:.82rem}
+  .brand{display:flex;align-items:center;gap:10px}
+  .led{
+    width:9px;height:9px;border-radius:50%;flex:none;background:var(--phos);
+    box-shadow:0 0 8px var(--phos),0 0 18px rgba(61,255,122,.6);animation:pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.42}}
+  .brand .path{color:var(--phos);font-weight:500;letter-spacing:.02em}
+  .brand .dim{color:var(--muted)}
+  .nav ul{display:flex;gap:24px;list-style:none;font-size:.78rem}
+  .nav ul a{color:var(--muted);text-transform:lowercase}
+  .nav ul a:hover{color:var(--phos)}
+  .nav .cta{
+    font-size:.76rem;font-weight:500;color:var(--bg);background:var(--phos);
+    padding:9px 18px;white-space:nowrap;transition:background .16s ease,box-shadow .16s ease;
+  }
+  .nav .cta:hover{background:var(--phos-2);box-shadow:0 0 18px rgba(61,255,122,.5)}
+
+  /* ---------- hero ---------- */
+  .hero{padding:72px 0 76px;position:relative}
+  .hero .term{
+    border:1px solid var(--line);background:var(--panel);
+    box-shadow:0 0 0 1px rgba(61,255,122,.06), 0 0 60px rgba(61,255,122,.05) inset;
+  }
+  .termbar{
+    display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line);
+    font-size:.72rem;color:var(--muted);
+  }
+  .dot{width:9px;height:9px;border-radius:50%;border:1px solid var(--line)}
+  .dot.on{background:var(--phos);border-color:var(--phos);box-shadow:0 0 6px var(--phos)}
+  .termbar .file{margin-left:8px}
+  .termbody{padding:34px 30px 38px}
+  .promptline{font-size:.84rem;color:var(--muted);margin-bottom:20px}
+  .promptline b{color:var(--phos);font-weight:500}
+  .hero h1{font-size:clamp(2.6rem,6.6vw,5rem);max-width:22ch;margin-bottom:24px;color:var(--phos)}
+  .hero h1 .am{color:var(--amber)}
+  .caret{display:inline-block;width:.52em;height:.86em;background:var(--phos);vertical-align:-.06em;margin-left:6px;animation:blink 1.05s steps(1) infinite}
+  @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+  .hero p.lead{font-size:.98rem;max-width:62ch;color:var(--ink);font-weight:300;margin-bottom:32px}
+  .hero p.lead .p{font-weight:400}
+  .btns{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{
+    display:inline-block;font-size:.8rem;font-weight:500;padding:12px 22px;
+    border:1px solid var(--phos);color:var(--phos);background:transparent;
+    transition:background .16s ease,color .16s ease,box-shadow .16s ease;
+  }
+  .btn:hover{background:var(--phos);color:var(--bg);box-shadow:0 0 22px rgba(61,255,122,.45)}
+  .btn.solid{background:var(--phos);color:var(--bg)}
+  .btn.solid:hover{background:var(--phos-2)}
+
+  /* ---------- output lines ---------- */
+  .outputs{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-2)}
+  .outputs .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+  .out{padding:26px 18px;border-right:1px solid var(--line)}
+  .out:last-child{border-right:0}
+  .out .k{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.14em;display:block;margin-bottom:8px}
+  .out .v{font-family:'VT323',monospace;font-size:2rem;color:var(--phos);line-height:1}
+
+  /* ---------- sections ---------- */
+  section{padding:84px 0}
+  .shead{max-width:62ch;margin-bottom:44px}
+  .tagline{
+    font-size:.72rem;color:var(--amber);text-transform:uppercase;letter-spacing:.2em;
+    display:block;margin-bottom:14px;
+  }
+  .shead h2{font-size:clamp(1.9rem,4vw,3rem);color:var(--phos);margin-bottom:16px}
+  .shead p{color:var(--ink);font-weight:300}
+
+  .mods{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line)}
+  .mod{padding:28px 24px;border-right:1px solid var(--line);background:var(--panel);transition:background .18s ease}
+  .mod:last-child{border-right:0}
+  .mod:hover{background:#0D1A11}
+  .mod .id{font-size:.7rem;color:var(--muted);display:block;margin-bottom:16px}
+  .mod .id b{color:var(--amber);font-weight:500}
+  .mod h3{font-size:1.32rem;color:var(--phos);margin-bottom:10px}
+  .mod p{font-size:.86rem;color:var(--ink);font-weight:300}
+
+  /* build panel */
+  .build{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);background:var(--panel)}
+  .build .txt{padding:44px 38px;border-right:1px solid var(--line)}
+  .build .txt h2{font-size:clamp(1.7rem,3.2vw,2.5rem);color:var(--phos);margin-bottom:18px}
+  .build .txt p{color:var(--ink);font-weight:300;margin-bottom:14px;font-size:.92rem}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+  .tag{font-size:.7rem;color:var(--phos);border:1px solid var(--phos-dim);padding:6px 11px}
+  .build .screen{
+    position:relative;display:grid;place-items:center;min-height:400px;overflow:hidden;
+    background:radial-gradient(circle at 50% 50%, rgba(61,255,122,.10), transparent 66%);
+  }
+  .build .screen .box{
+    border:1px solid var(--phos);padding:26px 30px;text-align:center;
+    box-shadow:0 0 26px rgba(61,255,122,.28), inset 0 0 22px rgba(61,255,122,.10);
+    animation:flick 5.5s linear infinite;
+  }
+  @keyframes flick{0%,96%,100%{opacity:1}97%{opacity:.72}98%{opacity:1}99%{opacity:.86}}
+  .build .screen .box .big{font-family:'VT323',monospace;font-size:3.2rem;color:var(--phos);line-height:1}
+  .build .screen .box .sub{font-size:.7rem;color:var(--muted);letter-spacing:.18em;text-transform:uppercase;margin-top:8px}
+
+  /* rules */
+  .rules{border-top:1px solid var(--line)}
+  .rule{display:grid;grid-template-columns:64px 1fr 1.15fr;gap:0;padding:22px 0;border-bottom:1px solid var(--line);align-items:baseline}
+  .rule .n{font-size:.76rem;color:var(--amber)}
+  .rule h3{font-size:1.22rem;color:var(--phos)}
+  .rule p{font-size:.86rem;color:var(--ink);font-weight:300}
+
+  /* contact */
+  .contact{border:1px solid var(--phos-dim);background:var(--panel);padding:48px 42px;position:relative;overflow:hidden}
+  .contact:before{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+    background:radial-gradient(500px 300px at 20% 0%, rgba(61,255,122,.10), transparent 62%);
+  }
+  .contact > *{position:relative;z-index:2}
+  .contact .grid2{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+  .contact h2{font-size:clamp(1.8rem,3.6vw,2.6rem);color:var(--phos);margin-bottom:16px}
+  .contact p{color:var(--ink);font-weight:300}
+  .boxes{display:flex;flex-direction:column;gap:12px}
+  .mbox{border:1px solid var(--line);padding:16px 18px;background:var(--bg-2)}
+  .mbox small{display:block;font-size:.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:.14em;margin-bottom:7px}
+  .mbox a{font-size:.9rem;color:var(--phos);word-break:break-all}
+  .mbox a:hover{color:var(--phos-2);text-shadow:0 0 12px rgba(61,255,122,.6)}
+
+  /* footer */
+  footer{border-top:1px solid var(--line);padding:30px 0 44px;font-size:.76rem}
+  footer .frow{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;align-items:center}
+  footer .cp{color:var(--muted)}
+  footer nav{display:flex;gap:24px}
+  footer nav a{color:var(--muted)}
+  footer nav a:hover{color:var(--phos)}
+
+  @media(max-width:920px){
+    .nav ul{display:none}
+    .outputs .wrap{grid-template-columns:repeat(2,1fr)}
+    .out:nth-child(2){border-right:0}
+    .out:nth-child(1),.out:nth-child(2){border-bottom:1px solid var(--line)}
+    .mods{grid-template-columns:1fr}
+    .mod{border-right:0;border-bottom:1px solid var(--line)}
+    .mod:last-child{border-bottom:0}
+    .build{grid-template-columns:1fr}
+    .build .txt{border-right:0;border-bottom:1px solid var(--line);padding:30px 24px}
+    .build .screen{min-height:300px}
+    .rule{grid-template-columns:44px 1fr;row-gap:6px}
+    .rule p{grid-column:1/-1}
+    .contact{padding:32px 24px}
+    .contact .grid2{grid-template-columns:1fr;gap:30px}
+    section{padding:58px 0}
+    .hero{padding:48px 0 54px}
+    .termbody{padding:24px 20px 28px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/"><span class="led"></span><span class="path">rommels.art</span><span class="dim">:~$</span></a>
+    <ul>
+      <li><a href="#studio">./studio</a></li>
+      <li><a href="#build">./build</a></li>
+      <li><a href="#rules">./rules</a></li>
+      <li><a href="#contact">./contact</a></li>
+    </ul>
+    <a class="cta" href="#contact">connect</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="term">
+      <div class="termbar">
+        <span class="dot on"></span><span class="dot"></span><span class="dot"></span>
+        <span class="file">rommels_art_play — session 21</span>
+      </div>
+      <div class="termbody">
+        <div class="promptline"><b>guest@rommels.art</b>:~$ <span class="cmd">cat about.txt</span></div>
+        <h1 class="glow">Games,<br>compiled.<span class="caret"></span></h1>
+        <p class="lead">
+          We build tightly-scoped casual games for mobile. Every feature has to justify its
+          memory footprint. Nothing ships with a timer we did not choose, a paywall we did not
+          need, or a bug we already knew about.
+        </p>
+        <div class="btns">
+          <a class="btn solid" href="#build">inspect build</a>
+          <a class="btn" href="#contact">open channel</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="outputs">
+  <div class="wrap">
+    <div class="out"><span class="k">Runtime</span><span class="v">2019</span></div>
+    <div class="out"><span class="k">Builds shipped</span><span class="v">21</span></div>
+    <div class="out"><span class="k">Installs</span><span class="v">29M</span></div>
+    <div class="out"><span class="k">Known crashes</span><span class="v">0</span></div>
+  </div>
+</div>
+
+<section id="studio">
+  <div class="wrap">
+    <div class="shead">
+      <span class="tagline">// stdout</span>
+      <h2>Small surface area, long uptime.</h2>
+      <p>
+        A narrow catalogue is a design decision, not a limitation. We keep three or four titles
+        in active rotation and give each of them years of maintenance instead of shipping
+        something new every quarter and abandoning it.
+      </p>
+    </div>
+    <div class="mods">
+      <div class="mod">
+        <span class="id"><b>[01]</b> module: scope</span>
+        <h3>Nothing unused</h3>
+        <p>If a screen element does not help you play, it is removed. We delete interface rather than decorate it.</p>
+      </div>
+      <div class="mod">
+        <span class="id"><b>[02]</b> module: access</span>
+        <h3>Runs on low-end</h3>
+        <p>Tested on budget Android hardware and unstable networks first. If it stutters there, the build does not go out.</p>
+      </div>
+      <div class="mod">
+        <span class="id"><b>[03]</b> module: upkeep</span>
+        <h3>Patched, not shelved</h3>
+        <p>Released titles keep receiving compatibility work. A 2020 game should still open cleanly in 2027.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="build" style="padding-top:0">
+  <div class="wrap">
+    <div class="shead">
+      <span class="tagline">// primary binary</span>
+      <h2>Rommels — a puzzle with no clock.</h2>
+    </div>
+    <div class="build">
+      <div class="txt">
+        <p>
+          Our flagship title is a hand-authored logic puzzle. There is no timer, no fail state,
+          and no resource that drains while you think. Each board introduces one idea and asks
+          you to combine it with everything the game has taught so far.
+        </p>
+        <p>
+          Hints are free and unlimited. Progress is written on every move, and the entire game
+          runs offline — so it works on a plane, in a lift, or on a train that lost signal an
+          hour ago.
+        </p>
+        <div class="tags">
+          <span class="tag">puzzle</span>
+          <span class="tag">offline</span>
+          <span class="tag">no fail state</span>
+          <span class="tag">free to start</span>
+        </div>
+      </div>
+      <div class="screen">
+        <div class="box">
+          <div class="big glow">OK</div>
+          <div class="sub">build verified</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="rules" style="padding-top:0">
+  <div class="wrap">
+    <div class="shead">
+      <span class="tagline">// constraints</span>
+      <h2>Hard rules, enforced.</h2>
+    </div>
+    <div class="rules">
+      <div class="rule">
+        <div class="n">[01]</div>
+        <h3>No manufactured waiting</h3>
+        <p>Energy bars and cooldowns are not added to games that do not need them. Difficulty belongs in the puzzle, not in the shop.</p>
+      </div>
+      <div class="rule">
+        <div class="n">[02]</div>
+        <h3>Price before tap</h3>
+        <p>Anything purchasable is priced and described before you commit. No invented countdowns, no recurring "limited" offers.</p>
+      </div>
+      <div class="rule">
+        <div class="n">[03]</div>
+        <h3>Minimal collection</h3>
+        <p>We gather only what is needed to run and improve the game, documented plainly in our <a href="/privacy/">privacy policy</a>.</p>
+      </div>
+      <div class="rule">
+        <div class="n">[04]</div>
+        <h3>Fix before feature</h3>
+        <p>A known crash is repaired before new content starts. A broken build is not a roadmap item — it is a broken product.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap" id="contact">
+  <div class="contact">
+    <div class="grid2">
+      <div>
+        <h2>Open a channel</h2>
+        <p>
+          Publishers, distribution partners and players reach the same inbox, and it is read
+          by the people who build the games.
+        </p>
+      </div>
+      <div class="boxes">
+        <div class="mbox">
+          <small>general &amp; player support</small>
+          <a href="mailto:societesatralomdarl@gmail.com">societesatralomdarl@gmail.com</a>
+        </div>
+        <div class="mbox">
+          <small>business &amp; publishing</small>
+          <a href="mailto:societesatralomdarl@gmail.com">societesatralomdarl@gmail.com</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="frow">
+      <div class="cp">© 2026 Rommels Art Play. exit 0</div>
+      <nav>
+        <a href="/privacy/">/privacy</a>
+        <a href="/terms/">/terms</a>
+        <a href="#contact">/contact</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
